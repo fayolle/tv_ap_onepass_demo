@@ -2,11 +2,12 @@ clear
 close all
 clc
 
-addpath('../../images');
+f = im2double(imread('barbara_color.png')); 
+b = 80; 
+lambda = 15; 
+T=0.4; 
+alpha = 1.0; 
 
-f = im2double(imread('barbara_color.png')); b = 80; lambda = 15; T=0.4; alpha = 1.0; hline = 330;
-
-s = size(f);
 figure,imshow(f),title('original');
 
 disc_curv = @(img) discrepancy_curv(img, b);
@@ -33,6 +34,9 @@ u = image_struct_admm_1pass(f, lambda, ss, ax, px);
 figure,imshow(u),title('structure');
 figure,imshow(f-u),title('texture');
 
+
+s = size(f);
+hline = 330;
 figure,
 subplot(3,1,1); plot(f(hline,:)); axis([0 s(2) 0 1]); title('original signal');
 subplot(3,1,2); plot(u(hline,:)); axis([0 s(2) 0 1]); title(['smoothed signal, \lambda=',num2str(lambda),', b=',num2str(b)]);
