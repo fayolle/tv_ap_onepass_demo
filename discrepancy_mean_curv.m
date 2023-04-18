@@ -7,13 +7,15 @@ for c=1:size(f,3)
     K(:,:,c) = ifft2(ifftshift(fftshift(fft2(K0(:,:,c))).*butter));
 end % smoothed curvature
 
-D = abs(K-K0)/max(abs(K(:)-K0(:)));
-H3 = fspecial('gaussian',[7,7],3);
-D1 = imfilter(D,H3);
-
+D = abs(K-K0);
+D1 = D; 
 for c=1:size(f,3)
     D(:,:,c) = sum(D1,3)/size(D1,3);
 end
-D = D./max(D(:));
+
+H3 = fspecial('gaussian',[7,7],3);
+D1 = imfilter(D,H3);
+
+D = D1./max(D1(:));
 
 end
